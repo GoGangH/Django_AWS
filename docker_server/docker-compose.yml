@@ -1,0 +1,39 @@
+version: '3'
+services:
+
+    nginx:
+        container_name: nginx
+        build: ./nginx
+        image: docker-server/nginx
+        restart: always
+        ports:
+          - "80:80"
+        volumes:
+          - ./server_django:/srv/docker_server
+          - ./log:/var/log/nginx
+        depends_on:
+          - django
+
+    django:
+        container_name: django
+        build: ./server_django
+        image: docker-server/django
+        restart: always
+        command: uwsgi --ini uwsgi.ini
+        volumes:
+          - ./server_django:/srv/docker-server
+          - ./log:/var/log/uwsgi
+
+    mysql:
+      image: mysql:5.7
+      container_name: for_mysql
+      volumes: ./docker/data:/var/lib/mysql/data
+      command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: never123
+        MYSQL_DATABASE: Music_
+        MYSQL_USER: root
+        MYSQL_PASSWORD: never123
+      ports:
+        - "3300:3306"
