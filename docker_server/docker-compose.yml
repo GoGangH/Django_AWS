@@ -9,7 +9,7 @@ services:
         ports:
           - "80:80"
         volumes:
-          - ./django:/srv/docker-server
+          - ./nginx:/srv/docker-server
           - ./log:/var/log/nginx
         depends_on:
           - django

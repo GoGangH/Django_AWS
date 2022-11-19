@@ -1,4 +1,3 @@
-# ~/docker_server/nginx/Dockerfile
 FROM nginx:latest
 
 COPY nginx.conf /etc/nginx/nginx.conf
